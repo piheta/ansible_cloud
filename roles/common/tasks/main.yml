@@ -1,0 +1,48 @@
+---
+  - name: Setup repositories
+    shell: "> /etc/apk/repositories && /sbin/setup-apkrepos -fc"
+    changed_when: false
+
+  - name: Run apk update
+    community.general.apk:
+      update_cache: true
+
+  - name: Run apk upgrade
+    community.general.apk:
+      upgrade: true
+
+  - name: Install common packages
+    community.general.apk:
+      name:
+        - doas
+        - htop
+        - prometheus-node-exporter
+      state: present
+
+  - name: Start service node-exporter
+    service:
+      name: node-exporter
+      state: started
+      enabled: true
+
+  - name: Add user
+    ansible.builtin.user:
+      name: piheta
+      password:
+      create_home: true
+      shell: /bin/bash
+      groups: wheel
+      append: yes
+
+  - name: Upload .bashrc
+    copy:
+      src: bashrc.j2
+      dest: /home/piheta/.bashrc
+      owner: piheta
+      group: piheta
+      mode: '0644'
+
+  - name: Disable root user
+    ansible.builtin.user:
+      name: root
+      password_lock: true

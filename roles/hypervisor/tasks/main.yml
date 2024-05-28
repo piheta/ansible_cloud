@@ -1,0 +1,10 @@
+---
+  - name: Install qemu
+    community.general.apk:
+      name:
+        - libvirt-daemon
+        - qemu-img
+        - qemu-system-x86_64
+        - qemu-modules
+        - openrc
+      state: present

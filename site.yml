@@ -1,0 +1,3 @@
+---
+- import_playbook: hypervisors.yml
+- import_playbook: nodes.yml

@@ -1,0 +1,10 @@
+---
+- name: Node deploy playbook
+  hosts: all
+  gather_facts: false
+  become: true
+  become_method: doas
+
+  roles:
+    - common
+    - node

@@ -1,0 +1,12 @@
+---
+  - name: Install k3s
+    community.general.apk:
+      name:
+        - k3s
+      state: present
+
+  - name: Start service k3s
+    service:
+      name: k3s
+      state: started
+      enabled: true
