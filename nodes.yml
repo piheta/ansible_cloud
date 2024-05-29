@@ -1,5 +1,5 @@
 ---
-- name: Node deploy playbook
+- name: Kubernetes node deploy playbook
   hosts: all
   gather_facts: false
   become: true
@@ -7,4 +7,4 @@
 
   roles:
     - common
-    - node
+    - k8s-node

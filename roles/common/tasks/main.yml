@@ -26,7 +26,7 @@
       enabled: true
 
   - name: Add user
-    ansible.builtin.user:
+    user:
       name: piheta
       password:
       create_home: true
@@ -43,6 +43,6 @@
       mode: '0644'
 
   - name: Disable root user
-    ansible.builtin.user:
+    user:
       name: root
       password_lock: true

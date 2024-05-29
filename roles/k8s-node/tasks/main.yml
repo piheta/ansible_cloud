@@ -16,12 +16,14 @@
       path: /home/piheta/.header.temp
       state: absent
 
-  - name: Install qemu
+  - name: Install k3s
     community.general.apk:
       name:
-        - libvirt-daemon
-        - qemu-img
-        - qemu-system-x86_64
-        - qemu-modules
-        - openrc
+        - k3s
       state: present
+
+  - name: Start service k3s
+    service:
+      name: k3s
+      state: started
+      enabled: true
