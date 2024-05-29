@@ -1,0 +1,22 @@
+# Only for initial deployment, can't resize resources
+isos:
+  - name: alpine-3.20.0.iso
+    url: "https://dl-cdn.alpinelinux.org/alpine/v3.20/releases/x86_64/alpine-standard-3.20.0-x86_64.iso"
+
+nodes:
+  - name: k8s-master
+    master: true # if false, worker will join cluster
+    cpu: 2
+    ram: 4096
+    ssd: 50M
+    iso: alpine-3.20.0.iso
+    osvar: generic66  # virt-install needs a --os-variant, generic66 means generic linux kernel 6.6.x
+  
+  - name: k8s-worker-1
+    master: false 
+    cpu: 1
+    ram: 2048
+    ssd: 50M
+    iso: alpine-3.20.0.iso
+    osvar: generic66
+

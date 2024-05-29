@@ -25,3 +25,21 @@
         - qemu-modules
         - openrc
       state: present
+
+  - name: Create VM disks
+    shell:
+      cmd: "mkdir -p /opt/vms/disks /opt/vms/isos && [ -f /opt/vms/disks/{{ item.name }}.img ] || qemu-img create -f qcow2 /opt/vms/disks/{{ item.name }}.img {{ item.ssd }}"
+    with_items: "{{ nodes }}"
+
+  - name: Download VM Isos
+    ansible.builtin.get_url:
+      url: "{{ item.url }}"
+      dest: /opt/vms/isos/{{ item.name }}
+      mode: '0644'
+    with_items: "{{ isos }}"
+
+  - name: Create VM # cant test yet
+    shell:
+      cmd: echo done
+      #cmd: virt-install --name={{ item.name }} --vcpus={{ item.cpu }} --memory={{ item.ram }} --cdrom=/opt/vms/isos/{{ item.iso }} --disk path=/opt/vms/disks/{{ item.name }}.qcow2 --os-variant={{ item.osvar }}
+    with_items: "{{ nodes }}"
